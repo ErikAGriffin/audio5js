@@ -10,12 +10,16 @@
 
   if (typeof (module) !== 'undefined' && module.exports) { // CommonJS
     module.exports = factory(ns, $win);
-  } else if (typeof (define) === 'function' && define.amd) { // AMD
+  }
+  if (typeof (define) === 'function' && define.amd) { // AMD
     define(function () {
       return factory(ns, $win);
     });
-  } else { // <script>
-    $win[ns] = factory(ns, $win);
+  }
+  if (typeof window !== 'undefined') { // Define globally as fallback
+      $win[ns] = factory(ns, $win);
+  } else if (typeof global !== 'undefined') { // Add to global in Node.js (for testing, etc).
+    global[ns] = factory(ns, $win);
   }
 
 }(window, 'Audio5js', function (ns, $win) {
