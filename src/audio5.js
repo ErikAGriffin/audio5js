@@ -8,6 +8,8 @@
   /*global define */
   /*global swfobject */
 
+  console.error("I am indeed building a new world.");
+
   if (typeof (module) !== 'undefined' && module.exports) { // CommonJS
     module.exports = factory(ns, $win);
   }
@@ -435,6 +437,8 @@
      * @param {String} url URL of audio to load
      */
     load: function (url) {
+        console.log("audio5: load called with "+url);
+        console.log(this.audio);
       this.reset();
       this.audio.load(url);
     },
@@ -693,6 +697,7 @@
      * Resets audio position and parameters.
      */
     reset: function () {
+        console.log("this.reset()");
       this.clearLoadProgress();
       this.seekable = false;
       this.duration = 0;
@@ -704,6 +709,7 @@
      * @param {String} url URL of audio to load
      */
     load: function (url) {
+        console.log("some other load... "+url);
       this.reset();
       this.trigger('pause');
       //this.destroyAudio();
@@ -905,6 +911,7 @@
      * @param {String} url URL of audio to load
      */
     load: function (url) {
+        console.log('another load...'+url);
       var that = this,
           f = function(u){
             that.audio.load(u);
