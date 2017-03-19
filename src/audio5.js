@@ -510,6 +510,7 @@
      * Create new audio instance
      */
     createAudio: function(){
+        console.log('A: creating audio...');
       this.audio = new Audio();
       this.audio.autoplay = false;
       this.audio.preload = 'auto';
@@ -588,7 +589,7 @@
      * Audio load start event handler. Triggered when audio starts loading
      */
     onLoadStart: function(){
-        console.log('onLoadStart');
+        console.log('A: onLoadStart');
       this.trigger('loadstart');
     },
     /**
@@ -596,14 +597,17 @@
      * Resets player parameters and starts audio download progress timer.
      */
     onLoad: function () {
-        console.log('onLoad');
+        console.log('A: onLoad');
       if(!this.audio){
+          console.log('A: onLoad: no this.audio... setting a Timeout');
         return setTimeout(this.onLoad.bind(this), 100);
       }
       this.seekable = this.audio.seekable && this.audio.seekable.length > 0;
       if (this.seekable) {
+          console.log('A: onLoad: its seekable, setting timer');
         this.timer = setInterval(this.onProgress.bind(this), 250);
       }
+      console.log('A: onLoad: triggering canPlay');
       this.trigger('canplay');
     },
     /**
@@ -658,6 +662,7 @@
      * Cancelled when audio has fully download or when a new audio file has been loaded to the player.
      */
     onProgress: function () {
+        console.log('A: onProgress!');
       if (this.audio && this.audio.buffered !== null && this.audio.buffered.length) {
         this.duration = this.audio.duration === Infinity ? null : this.audio.duration;
         this.load_percent = parseInt(((this.audio.buffered.end(this.audio.buffered.length - 1) / this.duration) * 100), 10);
@@ -690,9 +695,9 @@
      * Clears periodical audio download progress callback.
      */
     clearLoadProgress: function () {
-        console.log('clearLoadProgress()');
+        console.log('A: clearLoadProgress()');
       if (this.timer !== undefined) {
-          console.log('something with a timer..');
+          console.log('A: something with a timer..');
         clearInterval(this.timer);
         delete this.timer;
       }
@@ -701,7 +706,7 @@
      * Resets audio position and parameters.
      */
     reset: function () {
-        console.log("this.reset()");
+        console.log("A: this.reset()");
       this.clearLoadProgress();
       this.seekable = false;
       this.duration = 0;
@@ -726,6 +731,7 @@
       this.audio.setAttribute('src', url);
       console.log('A: audio.load()');
       this.audio.load();
+      console.log('A: checkpoint after audio.load...');
     },
     /**
      * Play audio
@@ -823,6 +829,7 @@
    * @return {Boolean} is audio mime type supported by browser or not
    */
   Audio5js.can_play = function (mime_type) {
+      console.log('Bish: can_play');
     return util.can_play(mime_type);
   };
 
@@ -924,8 +931,9 @@
           f = function(u){
               console.log('B: audio.load(url)');
             that.audio.load(u);
-            console.log('B: triggering load');
+                console.log('B: triggering load');
             that.trigger('load');
+                console.log('B: wait.. what?');
           };
 
       if(this.ready){
