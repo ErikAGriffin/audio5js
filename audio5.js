@@ -8,7 +8,7 @@
   /*global define */
   /*global swfobject */
 
-  console.error("I am indeed building a new world.");
+  console.error("Building better worlds.");
 
   if (typeof (module) !== 'undefined' && module.exports) { // CommonJS
     module.exports = factory(ns, $win);
