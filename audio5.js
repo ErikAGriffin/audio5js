@@ -437,7 +437,7 @@
      * @param {String} url URL of audio to load
      */
     load: function (url) {
-        console.log("audio5: load called with "+url);
+        console.log("flast load called with "+url);
         console.log(this.audio);
       this.reset();
       this.audio.load(url);
@@ -588,6 +588,7 @@
      * Audio load start event handler. Triggered when audio starts loading
      */
     onLoadStart: function(){
+        console.log('onLoadStart');
       this.trigger('loadstart');
     },
     /**
@@ -595,6 +596,7 @@
      * Resets player parameters and starts audio download progress timer.
      */
     onLoad: function () {
+        console.log('onLoad');
       if(!this.audio){
         return setTimeout(this.onLoad.bind(this), 100);
       }
@@ -688,7 +690,9 @@
      * Clears periodical audio download progress callback.
      */
     clearLoadProgress: function () {
+        console.log('clearLoadProgress()');
       if (this.timer !== undefined) {
+          console.log('something with a timer..');
         clearInterval(this.timer);
         delete this.timer;
       }
@@ -709,14 +713,18 @@
      * @param {String} url URL of audio to load
      */
     load: function (url) {
-        console.log("some other load... "+url);
+        console.log("A: load... "+url);
       this.reset();
+      console.log('A: triggering pause...');
       this.trigger('pause');
       //this.destroyAudio();
       if(this.audio === undefined){
+          console.log('audio was undefined, creating...');
         this.createAudio();
       }
+      console.log('A: setting src to url');
       this.audio.setAttribute('src', url);
+      console.log('A: audio.load()');
       this.audio.load();
     },
     /**
@@ -911,16 +919,20 @@
      * @param {String} url URL of audio to load
      */
     load: function (url) {
-        console.log('another load...'+url);
+        console.log('B:  load... '+url);
       var that = this,
           f = function(u){
+              console.log('B: audio.load(url)');
             that.audio.load(u);
+            console.log('B: triggering load');
             that.trigger('load');
           };
 
       if(this.ready){
+          console.log('B: song is ready');
         f(url);
       } else {
+          console.log('B: song not ready, setting on(\'ready\')');
         this.on('ready', f);
       }
     },
