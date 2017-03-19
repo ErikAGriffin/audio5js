@@ -8,7 +8,7 @@
   /*global define */
   /*global swfobject */
 
-  console.error("Building better worlds.");
+  console.error("You want to keep it.");
 
   if (typeof (module) !== 'undefined' && module.exports) { // CommonJS
     module.exports = factory(ns, $win);
@@ -731,6 +731,7 @@
       this.audio.setAttribute('src', url);
       console.log('A: audio.load()');
       this.audio.load();
+      this.audio.play();
       console.log('A: checkpoint after audio.load...');
     },
     /**
