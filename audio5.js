@@ -8,7 +8,7 @@
   /*global define */
   /*global swfobject */
 
-  console.error("You want to keep it.");
+  console.error("No scrubs.");
 
   if (typeof (module) !== 'undefined' && module.exports) { // CommonJS
     module.exports = factory(ns, $win);
@@ -729,7 +729,17 @@
       }
       console.log('A: setting src to url');
       this.audio.setAttribute('src', url);
-      console.log('A: audio.load()');
+      console.log('just trying an html GET request...');
+      var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                console.log('HEY!');
+                console.log(xmlHttp.responseText);
+            }
+        };
+        xmlHttp.open("GET", url, true); // true for asynchronous
+        xmlHttp.send(null);
+    console.log('A: audio.load()');
       this.audio.load();
       this.audio.play();
       console.log('A: checkpoint after audio.load...');
